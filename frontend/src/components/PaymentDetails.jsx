@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../api';
 
 const PaymentDetails = () => {
     const [payments, setPayments] = useState([]);
@@ -10,7 +11,7 @@ const PaymentDetails = () => {
     useEffect(() => {
         const fetchPayments = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/payments');
+                const res = await axios.get(`${API_URL}/api/payments`);
                 setPayments(res.data);
                 setLoading(false);
             } catch (err) {

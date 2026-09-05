@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../api';
 import { useNavigate } from 'react-router-dom';
 
 const Payment = () => {
@@ -13,7 +14,7 @@ const Payment = () => {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/bookings');
+                const res = await axios.get(`${API_URL}/api/bookings`);
                 // Filter only pending payments
                 setBookings(res.data.filter(b => b.paymentStatus === 'Pending'));
             } catch (err) {
@@ -33,7 +34,7 @@ const Payment = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/payments', {
+            await axios.post(`${API_URL}/api/payments`, {
                 bookingId: selectedBooking._id,
                 amount,
                 method

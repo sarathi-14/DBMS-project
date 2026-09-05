@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../api';
 import { useNavigate } from 'react-router-dom';
 
 const Checkout = () => {
@@ -10,7 +11,7 @@ const Checkout = () => {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/bookings');
+                const res = await axios.get(`${API_URL}/api/bookings`);
                 // Only active bookings
                 setBookings(res.data.filter(b => b.status === 'Booked'));
             } catch (err) {
@@ -22,7 +23,7 @@ const Checkout = () => {
 
     const handleCheckout = async (id) => {
         try {
-            await axios.put(`http://localhost:5000/api/bookings/checkout/${id}`);
+            await axios.put(`${API_URL}/api/bookings/checkout/${id}`);
             setMessage('Checkout successful! Room is now available.');
             setBookings(bookings.filter(b => b._id !== id));
             setTimeout(() => setMessage(''), 3000);

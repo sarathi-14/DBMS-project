@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_URL } from '../api';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,7 +11,7 @@ const AddCustomer = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/customers', customer);
+            await axios.post(`${API_URL}/api/customers`, customer);
             setMessage('Customer added successfully!');
             setTimeout(() => navigate('/'), 2000);
         } catch (err) {

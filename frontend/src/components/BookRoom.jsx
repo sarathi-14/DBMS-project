@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_URL } from '../api';
 import { useNavigate } from 'react-router-dom';
 
 const BookRoom = () => {
@@ -12,8 +13,8 @@ const BookRoom = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const custRes = await axios.get('http://localhost:5000/api/customers');
-                const roomRes = await axios.get('http://localhost:5000/api/rooms/available');
+                const custRes = await axios.get(`${API_URL}/api/customers`);
+                const roomRes = await axios.get(`${API_URL}/api/rooms/available`);
                 setCustomers(custRes.data);
                 setRooms(roomRes.data);
             } catch (err) {
@@ -26,7 +27,7 @@ const BookRoom = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/bookings', booking);
+            await axios.post(`${API_URL}/api/bookings`, booking);
             setMessage('Room booked successfully!');
             setTimeout(() => navigate('/'), 2000);
         } catch (err) {
