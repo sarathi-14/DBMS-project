@@ -25,15 +25,11 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/payments', paymentRoutes);
 
 // MongoDB Connection
-const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI)
     .then(() => {
         console.log('Successfully connected to MongoDB');
-        app.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`);
-        });
     })
     .catch((err) => {
         console.error('Database connection error:', err.message);
@@ -43,3 +39,15 @@ mongoose.connect(MONGO_URI)
 app.get('/', (req, res) => {
     res.send('Hotel Management System API is running...');
 });
+
+// Start server when running locally
+if (require.main === module) {
+    const PORT = process.env.PORT || 5000;
+
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+// Export Express app for Vercel
+module.exports = app;
